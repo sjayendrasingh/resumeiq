@@ -9,9 +9,15 @@ const resumeRoutes = require('./routes/resume');
 const app = express();
 const PORT = process.env.PORT || 5001;
 
-// CORS configuration (allow requests from Vite frontend dev server)
+// CORS configuration
+// In production: uses FRONTEND_URL env variable (set to your Vercel URL)
+// In development: allows localhost:5173 (Vite default)
+const allowedOrigins = process.env.FRONTEND_URL
+  ? [process.env.FRONTEND_URL]
+  : ['http://localhost:5173', 'http://localhost:3000'];
+
 app.use(cors({
-  origin: '*', // In production, replace with specific domain, e.g., Vercel deployment URL
+  origin: allowedOrigins,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
