@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Sparkles, Shield, Cpu, Zap, ArrowRight, Check, CheckCircle } from 'lucide-react';
+import { Sparkles, Shield, Cpu, Zap, ArrowRight, Check } from 'lucide-react';
 
 export default function LandingPage() {
   const { isAuthenticated } = useAuth();
@@ -8,8 +8,8 @@ export default function LandingPage() {
   const features = [
     {
       icon: <Cpu className="h-6 w-6 text-brand-600 dark:text-brand-400" />,
-      title: "Google Gemini Flash Engine",
-      description: "Powered by Gemini 1.5 Flash for blazing fast analysis and precise, structured evaluation of resume content."
+      title: "Grok AI Resume Engine",
+      description: "Powered by xAI Grok for structured resume analysis, ATS scoring, and role-focused improvement guidance."
     },
     {
       icon: <Shield className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />,
@@ -33,7 +33,7 @@ export default function LandingPage() {
         "3 Resume uploads per day",
         "Overall & ATS scores",
         "Key strengths & improvements",
-        "Gemini-1.5-Flash processing"
+        "Grok-powered structured analysis"
       ],
       popular: false,
       cta: "Start Free",
@@ -199,7 +199,7 @@ export default function LandingPage() {
 
                 <ul className="space-y-3.5 mb-8">
                   {tier.features.map((feature, fIdx) => (
-                    <li key={fIdx} className="flex items-center space-x-2.5 text-sm text-slate-600 dark:text-slate-350">
+                    <li key={fIdx} className="flex items-center space-x-2.5 text-sm text-slate-600 dark:text-slate-300">
                       <Check className={`h-4 w-4 flex-shrink-0 ${tier.popular ? 'text-brand-500' : 'text-slate-400'}`} />
                       <span>{feature}</span>
                     </li>

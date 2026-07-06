@@ -37,7 +37,7 @@ exports.uploadAndAnalyze = async (req, res) => {
       return res.status(400).json({ message: 'Could not extract text from this PDF. Please check if it is scanned/image-only.' });
     }
 
-    console.log(`Text extracted successfully (${extractedText.length} characters). Initiating Gemini analysis...`);
+    console.log(`Text extracted successfully (${extractedText.length} characters). Initiating Grok analysis...`);
 
     // 3. Request structured AI Analysis
     const analysis = await analyzeResumeText(extractedText, jobDescription);
@@ -52,7 +52,10 @@ exports.uploadAndAnalyze = async (req, res) => {
         atsScore: analysis.atsScore,
         strengths: analysis.strengths,
         improvements: analysis.improvements,
-        missingKeywords: analysis.missingKeywords
+        missingKeywords: analysis.missingKeywords,
+        resumeHighlights: analysis.resumeHighlights,
+        actionPlan: analysis.actionPlan,
+        suggestedHeadline: analysis.suggestedHeadline
       },
       jobDescription: jobDescription || '',
       jdMatchScore: analysis.jdMatchScore || 0

@@ -12,7 +12,7 @@ export default function App() {
   return (
     <Router>
       <AuthProvider>
-        <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-darkBg transition-colors duration-250">
+        <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-darkBg transition-colors duration-300">
           
           {/* Global Header */}
           <Navbar />

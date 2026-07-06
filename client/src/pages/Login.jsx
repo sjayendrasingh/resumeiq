@@ -37,7 +37,7 @@ export default function Login() {
   };
 
   return (
-    <div className="relative min-h-[calc(screen-16px)] flex items-center justify-center py-16 px-4 overflow-hidden bg-slate-50 dark:bg-darkBg">
+    <div className="relative min-h-[calc(100vh-64px)] flex items-center justify-center py-16 px-4 overflow-hidden bg-slate-50 dark:bg-darkBg">
       <div className="glow-backdrop" />
 
       <div className="w-full max-w-md relative z-10 animate-slide-up">
@@ -84,7 +84,7 @@ export default function Login() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@company.com"
-                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-350 dark:border-slate-800 bg-white/50 dark:bg-darkBg/60 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 focus:outline-none transition-all duration-200"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 dark:border-slate-800 bg-white/50 dark:bg-darkBg/60 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 focus:outline-none transition-all duration-200"
                   disabled={isSubmitting}
                 />
               </div>
@@ -105,7 +105,7 @@ export default function Login() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-350 dark:border-slate-800 bg-white/50 dark:bg-darkBg/60 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 focus:outline-none transition-all duration-200"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 dark:border-slate-800 bg-white/50 dark:bg-darkBg/60 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 focus:outline-none transition-all duration-200"
                   disabled={isSubmitting}
                 />
               </div>
@@ -133,7 +133,7 @@ export default function Login() {
         </div>
 
         {/* Link back */}
-        <p className="text-center mt-6 text-sm text-slate-500 dark:text-slate-450">
+        <p className="text-center mt-6 text-sm text-slate-500 dark:text-slate-400">
           Don't have an account?{' '}
           <Link to="/register" className="font-bold text-brand-600 dark:text-brand-400 hover:underline transition-all">
             Create account

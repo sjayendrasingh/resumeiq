@@ -21,13 +21,28 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Database Connection
-const mongoURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/resumeiq';
-mongoose.connect(mongoURI)
+// const mongoURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/resumeiq';
+// mongoose.connect(process.env.MONGO_URI);
+// const mongoURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/resumeiq';
+// mongoose
+//   .connect(process.env.MONGODB_URI)
+//   .then(() => {
+//     console.log(" Connected successfully to MongoDB Atlas/Local instance.");
+//   })
+//   .catch((err) => {
+//     console.error(" MongoDB database connection error:", err.message);
+//   });
+
+const mongoURI =
+  process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/resumeiq";
+
+mongoose
+  .connect(mongoURI)
   .then(() => {
-    console.log('✅ Connected successfully to MongoDB Atlas/Local instance.');
+    console.log("Connected successfully to MongoDB.");
   })
   .catch((err) => {
-    console.error('❌ MongoDB database connection error:', err.message);
+    console.error("MongoDB connection error:", err.message);
   });
 
 // Health check / welcome route
@@ -49,5 +64,5 @@ app.use((err, req, res, next) => {
 
 // Start Server
 app.listen(PORT, () => {
-  console.log(`🚀 Server successfully launched on port ${PORT} in ${process.env.NODE_ENV || 'development'} mode.`);
+  console.log(` Server successfully launched on port ${PORT} in ${process.env.NODE_ENV || 'development'} mode.`);
 });

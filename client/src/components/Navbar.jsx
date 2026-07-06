@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Menu, X, Sun, Moon, Sparkles, LogOut, LayoutDashboard, FileSpreadsheet } from 'lucide-react';
+import { Menu, X, Sun, Moon, Sparkles, LogOut, LayoutDashboard } from 'lucide-react';
 
 export default function Navbar() {
   const { user, logout, isAuthenticated } = useAuth();
@@ -91,7 +91,7 @@ export default function Navbar() {
                 <Link to="/login" className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 px-3 py-2 transition-colors">Sign In</Link>
                 <Link
                   to="/register"
-                  className="bg-brand-600 hover:bg-brand-700 text-white shadow-md shadow-brand-600/10 hover:shadow-brand-600/20 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-250 hover:-translate-y-0.5 active:translate-y-0"
+                  className="bg-brand-600 hover:bg-brand-700 text-white shadow-md shadow-brand-600/10 hover:shadow-brand-600/20 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0"
                 >
                   Get Started
                 </Link>

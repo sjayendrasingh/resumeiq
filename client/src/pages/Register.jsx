@@ -45,7 +45,7 @@ export default function Register() {
   };
 
   return (
-    <div className="relative min-h-[calc(screen-16px)] flex items-center justify-center py-16 px-4 overflow-hidden bg-slate-50 dark:bg-darkBg">
+    <div className="relative min-h-[calc(100vh-64px)] flex items-center justify-center py-16 px-4 overflow-hidden bg-slate-50 dark:bg-darkBg">
       <div className="glow-backdrop" />
 
       <div className="w-full max-w-md relative z-10 animate-slide-up">
@@ -83,7 +83,7 @@ export default function Register() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Alex Mercer"
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-350 dark:border-slate-800 bg-white/50 dark:bg-darkBg/60 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 focus:outline-none transition-all duration-200"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-800 bg-white/50 dark:bg-darkBg/60 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 focus:outline-none transition-all duration-200"
                   disabled={isSubmitting}
                 />
               </div>
@@ -104,7 +104,7 @@ export default function Register() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@company.com"
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-350 dark:border-slate-800 bg-white/50 dark:bg-darkBg/60 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 focus:outline-none transition-all duration-200"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-800 bg-white/50 dark:bg-darkBg/60 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 focus:outline-none transition-all duration-200"
                   disabled={isSubmitting}
                 />
               </div>
@@ -125,7 +125,7 @@ export default function Register() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="•••••••• (Min. 6 chars)"
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-350 dark:border-slate-800 bg-white/50 dark:bg-darkBg/60 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 focus:outline-none transition-all duration-200"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-800 bg-white/50 dark:bg-darkBg/60 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 focus:outline-none transition-all duration-200"
                   disabled={isSubmitting}
                 />
               </div>
@@ -146,7 +146,7 @@ export default function Register() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-350 dark:border-slate-800 bg-white/50 dark:bg-darkBg/60 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 focus:outline-none transition-all duration-200"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-800 bg-white/50 dark:bg-darkBg/60 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 focus:outline-none transition-all duration-200"
                   disabled={isSubmitting}
                 />
               </div>
@@ -174,7 +174,7 @@ export default function Register() {
         </div>
 
         {/* Link back */}
-        <p className="text-center mt-6 text-sm text-slate-500 dark:text-slate-450">
+        <p className="text-center mt-6 text-sm text-slate-500 dark:text-slate-400">
           Already have an account?{' '}
           <Link to="/login" className="font-bold text-brand-600 dark:text-brand-400 hover:underline transition-all">
             Sign In

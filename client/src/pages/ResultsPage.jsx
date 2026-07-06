@@ -1,17 +1,16 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import axiosInstance from '../api/axiosInstance';
 import { 
   RadialBarChart, RadialBar, ResponsiveContainer 
 } from 'recharts';
 import { 
   ArrowLeft, CheckCircle2, AlertTriangle, Key, FileText, 
-  Sparkles, Loader2, Calendar, Target, ExternalLink 
+  Loader2, Calendar, Target 
 } from 'lucide-react';
 
 export default function ResultsPage() {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -68,8 +67,24 @@ export default function ResultsPage() {
     );
   }
 
-  const { fileName, createdAt, analysis, jobDescription, jdMatchScore } = data;
-  const { overallScore, atsScore, strengths, improvements, missingKeywords } = analysis;
+  const {
+    fileName,
+    createdAt,
+    analysis = {},
+    jobDescription,
+    jdMatchScore = analysis.jdMatchScore ?? 0,
+    extractedText = ''
+  } = data;
+  const {
+    overallScore = 0,
+    atsScore = 0,
+    strengths = [],
+    improvements = [],
+    missingKeywords = [],
+    resumeHighlights = [],
+    actionPlan = [],
+    suggestedHeadline = ''
+  } = analysis;
 
   // Format Recharts data structures
   const buildGaugeData = (score, color) => [
@@ -96,13 +111,13 @@ export default function ResultsPage() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <Link
             to="/dashboard"
-            className="inline-flex items-center space-x-1.5 text-sm font-semibold text-slate-650 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 transition-colors w-fit"
+            className="inline-flex items-center space-x-1.5 text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 transition-colors w-fit"
           >
             <ArrowLeft className="h-4 w-4" />
             <span>Back to Dashboard</span>
           </Link>
           
-          <div className="text-xs sm:text-sm text-slate-500 dark:text-slate-450 flex items-center space-x-1.5">
+          <div className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 flex items-center space-x-1.5">
             <Calendar className="h-3.5 w-3.5" />
             <span>Audited on {new Date(createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
           </div>
@@ -112,7 +127,7 @@ export default function ResultsPage() {
         <div className="glass-card p-6 sm:p-8 rounded-3xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border-l-4 border-l-brand-600 dark:border-l-brand-500">
           <div className="space-y-1">
             <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Audit Report: {fileName}</h2>
-            <p className="text-slate-500 dark:text-slate-400 text-sm">Semantic analysis report compiled using Google Gemini Flash model</p>
+            <p className="text-slate-500 dark:text-slate-400 text-sm">Semantic analysis report compiled using Grok AI with structured scoring</p>
           </div>
           {hasJd && (
             <div className="inline-flex items-center space-x-2 px-3 py-1.5 bg-brand-50 dark:bg-brand-950/20 text-brand-600 dark:text-brand-400 border border-brand-100 dark:border-brand-900/30 rounded-xl text-xs font-semibold">
@@ -150,7 +165,7 @@ export default function ResultsPage() {
               </div>
             </div>
 
-            <p className="text-xs text-slate-500 dark:text-slate-450 px-2 leading-relaxed">
+            <p className="text-xs text-slate-500 dark:text-slate-400 px-2 leading-relaxed">
               Based on document grammar, clarity, visual layout spacing, and fresher impact.
             </p>
           </div>
@@ -180,7 +195,7 @@ export default function ResultsPage() {
               </div>
             </div>
 
-            <p className="text-xs text-slate-500 dark:text-slate-455 px-2 leading-relaxed">
+            <p className="text-xs text-slate-500 dark:text-slate-400 px-2 leading-relaxed">
               Standard parser compatibility rating checking for bullet points and structural labels.
             </p>
           </div>
@@ -222,12 +237,56 @@ export default function ResultsPage() {
               </div>
             )}
 
-            <p className="text-xs text-slate-500 dark:text-slate-450 px-2 leading-relaxed">
+            <p className="text-xs text-slate-500 dark:text-slate-400 px-2 leading-relaxed">
               Calculates how well your resume matches the job description criteria.
             </p>
           </div>
 
         </div>
+
+        {(suggestedHeadline || resumeHighlights.length > 0 || actionPlan.length > 0) && (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="glass-card p-6 rounded-3xl space-y-4">
+              <div className="flex items-center space-x-2 text-brand-600 dark:text-brand-400 border-b border-slate-100 dark:border-slate-800 pb-4">
+                <Target className="h-5 w-5" />
+                <h3 className="text-base font-bold text-slate-900 dark:text-white">Suggested Headline</h3>
+              </div>
+              <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                {suggestedHeadline || 'Full Stack Developer | MERN Stack | ResumeIQ Project Portfolio'}
+              </p>
+            </div>
+
+            <div className="glass-card p-6 rounded-3xl space-y-4">
+              <div className="flex items-center space-x-2 text-emerald-600 dark:text-emerald-400 border-b border-slate-100 dark:border-slate-800 pb-4">
+                <CheckCircle2 className="h-5 w-5" />
+                <h3 className="text-base font-bold text-slate-900 dark:text-white">Shortlist Highlights</h3>
+              </div>
+              <ul className="space-y-3">
+                {resumeHighlights.map((item, idx) => (
+                  <li key={idx} className="flex items-start space-x-2 text-sm text-slate-700 dark:text-slate-300">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="glass-card p-6 rounded-3xl space-y-4">
+              <div className="flex items-center space-x-2 text-amber-500 border-b border-slate-100 dark:border-slate-800 pb-4">
+                <AlertTriangle className="h-5 w-5" />
+                <h3 className="text-base font-bold text-slate-900 dark:text-white">Priority Action Plan</h3>
+              </div>
+              <ul className="space-y-3">
+                {actionPlan.map((item, idx) => (
+                  <li key={idx} className="flex items-start space-x-2 text-sm text-slate-700 dark:text-slate-300">
+                    <span className="h-1.5 w-1.5 rounded-full bg-amber-500 mt-2 flex-shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
 
         {/* Strengths & Improvements Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -283,7 +342,7 @@ export default function ResultsPage() {
             {missingKeywords.map((keyword, idx) => (
               <span 
                 key={idx}
-                className="px-3.5 py-1.5 text-xs font-bold bg-brand-50 hover:bg-brand-100 text-brand-650 dark:bg-brand-950/30 dark:hover:bg-brand-900/40 dark:text-brand-350 border border-brand-100 dark:border-brand-900/30 rounded-xl cursor-default transition-colors"
+                className="px-3.5 py-1.5 text-xs font-bold bg-brand-50 hover:bg-brand-100 text-brand-600 dark:bg-brand-950/30 dark:hover:bg-brand-900/40 dark:text-brand-300 border border-brand-100 dark:border-brand-900/30 rounded-xl cursor-default transition-colors"
               >
                 + {keyword}
               </span>
@@ -295,7 +354,7 @@ export default function ResultsPage() {
         {hasJd && (
           <div className="glass-card p-6 sm:p-8 rounded-3xl space-y-4">
             <h3 className="text-base font-bold text-slate-800 dark:text-slate-200">Cross-referenced Job Description</h3>
-            <div className="bg-slate-50 dark:bg-darkBg/50 p-4 rounded-2xl border border-slate-250/20 max-h-40 overflow-y-auto text-xs text-slate-650 dark:text-slate-400 leading-relaxed font-mono whitespace-pre-wrap">
+            <div className="bg-slate-50 dark:bg-darkBg/50 p-4 rounded-2xl border border-slate-200/40 max-h-40 overflow-y-auto text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-mono whitespace-pre-wrap">
               {jobDescription}
             </div>
           </div>
@@ -308,7 +367,7 @@ export default function ResultsPage() {
             className="w-full flex items-center justify-between p-5 text-left font-bold text-slate-800 dark:text-slate-200 hover:bg-slate-100/50 dark:hover:bg-slate-800/30 transition-colors"
           >
             <div className="flex items-center space-x-2 text-sm sm:text-base">
-              <FileText className="h-4.5 w-4.5 text-slate-500" />
+              <FileText className="h-4 w-4 text-slate-500" />
               <span>Inspect Extracted Resume Text (Debug View)</span>
             </div>
             <span className="text-xs text-brand-600 dark:text-brand-400 hover:underline">
@@ -319,7 +378,7 @@ export default function ResultsPage() {
           {showRawText && (
             <div className="p-6 border-t border-slate-200 dark:border-slate-800/80 animate-fade-in bg-slate-50/50 dark:bg-darkBg/25">
               <div className="bg-white dark:bg-darkBg p-5 rounded-2xl border border-slate-200 dark:border-slate-800/60 max-h-96 overflow-y-auto text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-mono whitespace-pre-wrap shadow-inner">
-                {extractedText || data.extractedText}
+                {extractedText || 'No extracted text is available for this analysis.'}
               </div>
             </div>
           )}

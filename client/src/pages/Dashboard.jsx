@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../api/axiosInstance';
 import UploadZone from '../components/UploadZone';
 import { 
-  FileText, Calendar, ChevronRight, Trash2, Eye, BarChart2, Award, 
-  HelpCircle, History, RefreshCw, AlertCircle 
+  FileText, Calendar, Trash2, Eye, BarChart2, Award, 
+  History, RefreshCw, AlertCircle 
 } from 'lucide-react';
 
 export default function Dashboard() {
@@ -112,7 +112,7 @@ export default function Dashboard() {
           </div>
           <button 
             onClick={fetchHistory}
-            className="flex items-center space-x-1.5 px-4 py-2 border border-slate-200 dark:border-slate-800 bg-white dark:bg-darkCard hover:bg-slate-50 dark:hover:bg-slate-800 text-sm font-semibold rounded-xl text-slate-700 dark:text-slate-350 transition-colors"
+            className="flex items-center space-x-1.5 px-4 py-2 border border-slate-200 dark:border-slate-800 bg-white dark:bg-darkCard hover:bg-slate-50 dark:hover:bg-slate-800 text-sm font-semibold rounded-xl text-slate-700 dark:text-slate-300 transition-colors"
           >
             <RefreshCw className="h-4 w-4" />
             <span>Reload data</span>
@@ -171,7 +171,7 @@ export default function Dashboard() {
         <div className="bg-white/40 dark:bg-darkCard/10 p-6 sm:p-10 rounded-[32px] border border-slate-200/50 dark:border-slate-800/40 backdrop-blur-md">
           <div className="text-center mb-8">
             <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Start New Resume Audit</h2>
-            <p className="text-slate-500 dark:text-slate-450 text-sm mt-1">Upload a PDF to parse keywords and calculate ATS matching percentage.</p>
+            <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">Upload a PDF to parse keywords and calculate ATS matching percentage.</p>
           </div>
           <UploadZone onAnalyze={handleAnalyze} isAnalyzing={isAnalyzing} />
         </div>
@@ -186,7 +186,7 @@ export default function Dashboard() {
           {loading ? (
             <div className="glass-card p-12 rounded-3xl text-center flex flex-col items-center justify-center space-y-4">
               <div className="h-8 w-8 border-4 border-brand-500/20 border-t-brand-600 rounded-full animate-spin"></div>
-              <p className="text-slate-550 dark:text-slate-400 text-sm">Retrieving database history records...</p>
+              <p className="text-slate-500 dark:text-slate-400 text-sm">Retrieving database history records...</p>
             </div>
           ) : history.length === 0 ? (
             <div className="glass-card p-12 rounded-3xl text-center space-y-3.5 border border-slate-200/40 dark:border-slate-800/40">
@@ -195,7 +195,7 @@ export default function Dashboard() {
               </div>
               <div className="space-y-1">
                 <h3 className="text-base font-bold text-slate-800 dark:text-slate-200">No resumes analyzed yet</h3>
-                <p className="text-slate-500 dark:text-slate-450 text-xs sm:text-sm">Upload your first PDF resume above to check optimization details.</p>
+                <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">Upload your first PDF resume above to check optimization details.</p>
               </div>
             </div>
           ) : (
@@ -215,26 +215,26 @@ export default function Dashboard() {
                   <tbody className="divide-y divide-slate-100 dark:divide-slate-800/85">
                     {history.map((item) => (
                       <tr key={item._id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/10 transition-colors">
-                        <td className="py-4.5 px-6 font-semibold text-slate-800 dark:text-slate-200 text-sm truncate max-w-xs sm:max-w-sm">
+                        <td className="py-4 px-6 font-semibold text-slate-800 dark:text-slate-200 text-sm truncate max-w-xs sm:max-w-sm">
                           {item.fileName}
                         </td>
-                        <td className="py-4.5 px-6 text-slate-500 dark:text-slate-455 text-sm">
+                        <td className="py-4 px-6 text-slate-500 dark:text-slate-400 text-sm">
                           <span className="flex items-center space-x-1.5">
                             <Calendar className="h-3.5 w-3.5" />
                             <span>{formatDate(item.createdAt)}</span>
                           </span>
                         </td>
-                        <td className="py-4.5 px-6 text-center">
+                        <td className="py-4 px-6 text-center">
                           <span className={`inline-flex px-2.5 py-1 text-xs font-bold rounded-lg ${getScoreBadge(item.analysis.overallScore)}`}>
                             {item.analysis.overallScore}
                           </span>
                         </td>
-                        <td className="py-4.5 px-6 text-center">
+                        <td className="py-4 px-6 text-center">
                           <span className={`inline-flex px-2.5 py-1 text-xs font-bold rounded-lg ${getScoreBadge(item.analysis.atsScore)}`}>
                             {item.analysis.atsScore}
                           </span>
                         </td>
-                        <td className="py-4.5 px-6 text-center text-sm font-semibold text-slate-700 dark:text-slate-300">
+                        <td className="py-4 px-6 text-center text-sm font-semibold text-slate-700 dark:text-slate-300">
                           {item.jdMatchScore > 0 ? (
                             <span className="inline-flex items-center space-x-1 text-brand-600 dark:text-brand-400 font-bold">
                               <span>{item.jdMatchScore}%</span>
@@ -243,7 +243,7 @@ export default function Dashboard() {
                             <span className="text-slate-400 dark:text-slate-600">—</span>
                           )}
                         </td>
-                        <td className="py-4.5 px-6 text-right">
+                        <td className="py-4 px-6 text-right">
                           <div className="flex items-center justify-end space-x-2">
                             <button
                               onClick={() => navigate(`/results/${item._id}`)}

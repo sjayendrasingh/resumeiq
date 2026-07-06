@@ -38,6 +38,18 @@ const resumeSchema = new mongoose.Schema({
     missingKeywords: {
       type: [String],
       default: []
+    },
+    resumeHighlights: {
+      type: [String],
+      default: []
+    },
+    actionPlan: {
+      type: [String],
+      default: []
+    },
+    suggestedHeadline: {
+      type: String,
+      default: ''
     }
   },
   jobDescription: {
