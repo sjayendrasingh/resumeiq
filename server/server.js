@@ -10,14 +10,25 @@ const app = express();
 const PORT = process.env.PORT || 5001;
 
 // CORS configuration
-// In production: uses FRONTEND_URL env variable (set to your Vercel URL)
-// In development: allows localhost:5173 (Vite default)
+// FRONTEND_URL can be comma-separated for multiple domains
+// e.g. "https://app.vercel.app,https://app-xyz.vercel.app"
 const allowedOrigins = process.env.FRONTEND_URL
-  ? [process.env.FRONTEND_URL]
+  ? process.env.FRONTEND_URL.split(',')
   : ['http://localhost:5173', 'http://localhost:3000'];
 
 app.use(cors({
-  origin: allowedOrigins,
+  origin: function (origin, callback) {
+    // Allow requests with no origin (mobile apps, curl, Postman)
+    if (!origin) return callback(null, true);
+    // Allow any vercel.app subdomain or explicitly listed origins
+    const isVercel = origin.endsWith('.vercel.app');
+    const isAllowed = allowedOrigins.some(o => o.trim() === origin);
+    if (isVercel || isAllowed) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
